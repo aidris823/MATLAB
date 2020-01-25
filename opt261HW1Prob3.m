@@ -1,10 +1,12 @@
-x = linspace(-10,10,10);
-y = linspace(-10,10,10);
-z = linspace(-10,10,10);
-
-
+[x,y,z] = sphere;
 
 figure(1)
-plot3(x,y,z);
+
+x = x*2;
+y = y*2;
+z = z*2;
+
+surf(x,y,z);
+
 
 
