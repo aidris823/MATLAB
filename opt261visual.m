@@ -1,5 +1,5 @@
 x = linspace(-2,2,101);
-f = x.*x;
+f = x.*x.*x;
 figure;
 plot(x,f,'k');
 xlabel('{\it x}')
