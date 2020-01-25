@@ -3,6 +3,7 @@ x = linspace(-15,15,1000); %Creates a row vector
 ...from -10 to 10 with 1000 elements
 f1 = x*-2 + 2; %Creates a vector with scalar multiplication -2 +2
  
+figure(1)
 plot(x,f1,'b')
 xlabel('x')
 ylabel('f')
@@ -22,5 +23,15 @@ f2 = f1+2;
 plot(x,f2,'b');
 
 %These are parallel lines!!!!!
+figure(2)
+x2 = linspace(-10,10,100);
+y2 = linspace(-10,10,100);
+[XX,YY] = meshgrid(x2,y2);
+z = (-2*XX) + (-1*YY) +1.5;
+
+surf(x2,y2,z);
+%This is a plane!!!!
+
+
 
 
