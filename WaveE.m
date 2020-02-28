@@ -72,14 +72,15 @@
 
 % Define Constants
 c = 3e8; % Speed of light in vacuum in m/s
-h=4.136e-15; % Planck's constant, h, in eV*s
-
+h_eV =4.136e-15; % Planck's constant, h, in eV*s
+h_J = 6.626e-34; % Planck's constant, h, in J*s
 % Convert Units
 %   -- This section selects the correct unit conversion for whatever the
 %      input unit string happens to be --
 %
 % Conversion of Wavelength to Energy
-is_lambda = true % true == Input is considered a wavelength, will change to 'false' if it's a wavelength
+is_lambda = true; % true == Input is considered a wavelength, will change to 'false' if it's a wavelength
+invalid = 0;
 if strcmp(unit,'km')
     ew = ew * 10^3;
 elseif strcmp(unit,'m')
@@ -98,19 +99,19 @@ elseif strcmp(unit,'J')
 elseif strcmp(unit,'eV')
     is_lambda = false;
 elseif strcmp(unit,'meV')
-    ew = ew *1000;
+    ew = ew*10^6;
     is_lambda = false;
     
 
 % The next statement in the conditional series describes what to do if an
 % incorrect/unrecognized unit is provided as an input
 else
+    invalid = 1;
     disp('ERROR: Invalid unit');
     disp('Please input one of the following units:');
     disp("Wavelength: 'km' 'm' 'cm' 'mm' 'um' 'mm' 'A'");
-    
-   
-  
+    disp(" Energy: 'J' 'eV' 'meV'");
+    disp("See help info for more info");
 end
 
 
@@ -118,40 +119,52 @@ end
 %   -- This section actually converts the energy to wavelength or
 %      vice versa according to the results of the if/else statements
 %      above
-%
+
+E = 0;
 % For the case where the input is a wavelength to be converted to energy:
-%if 
+if is_lambda
+
     % The next three lines calculate the energy from the wavelength in
     % three different units
-    
-    %CALCULATE
+    E_eV = (h_eV*c) / (n * ew); %electronVolts
+    E_meV = E_eV * 10^6; %megaelectronVolts
+    E_J = E_eV * 1.60218e-19;
     
     % The next 4 lines will define the output strings for the answer, but
     % will not display them
-    
+    header = "The energy corresponding to a free-space wavelength of" + num2str((ew*10^6)) + "um is:";
+    output_1 = num2str(E_eV) + " eV";
+    output_2 = num2str(E_meV)+ " meV";
+    output_3 = num2str(E_J) + " J";
   %  PREPARE STRINGS
-    
-%     
+         
 % % For the case where the input is a wavelength to be converted to energy:
-% else
+else
 %     % The next three lines convert the energt to wavelength in three
 %     % different units
-%     
-%     %CALCULATE
+    lam_m = (h_eV*c)/(n*ew);
+    lam_nm = lam_m * 10^9;
+    lam_um = lam_m * 10^6;
 %     
 %     % The next 4 lines will define the output strings for the answer, but
 %     % will not display them
-%    
+    header = "The wavelength in a material with refractive index n = " + num2str(n) + "corresponding to an energy of 295meV is:";
+    output_1 = num2str(lam_m) + " m";
+    output_2 = num2str(lam_nm) + " nm";
+    output_3 = num2str(lam_um) + " um";
+   
+    
 %     %PREPARE STRINGS
 %     
 %     
-% end
-% 
-% % Display Answer
-% 
-% %DISPLAY STRINGS
-% 
+end
 
-
+if invalid == 0
+    disp(header);
+    disp(output_1);
+    disp(output_2);
+    disp(output_3);
+else
+end
 
 % End of Script
