@@ -6,7 +6,8 @@
 x = linspace(1,1601,1601);
 for i = 2:11
     x(i) = BBD(i)
+    plot(i,x);
 end
-plot(i,x);
+
 
     
